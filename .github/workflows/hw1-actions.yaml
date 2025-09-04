@@ -1,0 +1,12 @@
+name: HW1 Actions
+on:
+  push:
+    branches: [ main, feature/** ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  print-date-time:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get current date and time
+        run: echo "Current date and time: $(date)"
