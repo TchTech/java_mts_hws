@@ -33,4 +33,11 @@ public class Pair<K, V> {
     public String toString() {
         return "Pair{key=" + String.valueOf(key) + ", value=" + String.valueOf(value) + "}";
     }
+    public static void main(String[] args) {
+        // пример использования
+        final Pair<String, Integer> pair = new Pair<>("Age", 25);
+        System.out.println(pair); // Ожидаем: Pair{key=Age, value=25}
+        final Pair<Integer, String> swapped = pair.swap();
+        System.out.println(swapped); // Ожидаем: Pair{key=25, value=Age}
+    }
 }

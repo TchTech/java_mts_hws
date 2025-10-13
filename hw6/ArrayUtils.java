@@ -8,4 +8,9 @@ public class ArrayUtils {
         }
         return -1;
     }
+    public static void main(String[] args) {
+        // пример использования
+        final String[] names = {"Alice", "Bob", "Charlie"};
+        final int index = ArrayUtils.findFirst(names, "Bob"); // Ожидаем: 1 (тк нумерация в массиве начинается с нуля)
+    }
 }

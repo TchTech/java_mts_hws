@@ -25,4 +25,12 @@ public class Calculator<T extends Number> {
         if (denom == 0.0) return Double.NaN;
         return a.doubleValue() / denom;
     }
+    public static void main(String[] args) {
+        // пример использования
+        final Calculator<Integer> intCalc = new Calculator<>();
+        final double result = intCalc.sum(5, 3); // 8.0
+
+        final Calculator<Double> doubleCalc = new Calculator<>();
+        final double div = doubleCalc.divide(10.0, 4.0); // 2.5
+    }
 }
