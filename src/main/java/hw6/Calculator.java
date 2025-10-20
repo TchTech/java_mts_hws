@@ -1,3 +1,5 @@
+package hw6;
+
 public class Calculator<T extends Number> {
 
     private double d(Number n) {
