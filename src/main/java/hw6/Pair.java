@@ -1,3 +1,5 @@
+package hw6;
+
 import java.util.Objects;
 
 public class Pair<K, V> {
