@@ -1,0 +1,7 @@
+logging:
+  level:
+    com.mipt.tchtech: DEBUG
+    org.springframework: INFO
+
+app:
+  mode: Режим Разработки
