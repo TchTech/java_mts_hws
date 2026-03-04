@@ -3,10 +3,10 @@ package com.mipt.tchtech.repository;
 import java.util.List;
 import java.util.Optional;
 
-import com.mipt.tchtech.model.Task;
+import com.mipt.tchtech.model.TaskEntity;
 
 /**
- * Интерфейс репозитория для управления сущностями Task.
+ * Интерфейс репозитория для управления сущностями TaskEntity.
  * Определяет базовые операции для работы с хранилищем задач.
  *
  * @author mts.tchtech
@@ -14,11 +14,11 @@ import com.mipt.tchtech.model.Task;
  */
 public interface TaskRepository {
 
-    Optional<Task> findById(String id);
+    Optional<TaskEntity> findById(String id);
 
-    List<Task> findAll();
+    List<TaskEntity> findAll();
 
-    Task save(Task task);
+    TaskEntity save(TaskEntity task);
 
     void deleteById(String id);
 }

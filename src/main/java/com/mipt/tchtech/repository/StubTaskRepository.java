@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.mipt.tchtech.model.Task;
+import com.mipt.tchtech.model.TaskEntity;
 
 /**
  * Репозиторий-заглушка для задач.
@@ -16,28 +16,28 @@ import com.mipt.tchtech.model.Task;
  */
 public class StubTaskRepository implements TaskRepository {
 
-    private final List<Task> stubTasks;
+    private final List<TaskEntity> stubTasks;
 
     public StubTaskRepository() {
         stubTasks = new ArrayList<>();
-        stubTasks.add(new Task("stub-1", "Заглушка 1", "Описание для заглушки 1", false));
-        stubTasks.add(new Task("stub-2", "Заглушка 2", "Описание для заглушки 2", true));
+        stubTasks.add(new TaskEntity("stub-1", "Заглушка 1", "Описание для заглушки 1", false));
+        stubTasks.add(new TaskEntity("stub-2", "Заглушка 2", "Описание для заглушки 2", true));
     }
 
     @Override
-    public Optional<Task> findById(String id) {
+    public Optional<TaskEntity> findById(String id) {
         return stubTasks.stream()
                 .filter(t -> t.getId().equals(id))
                 .findFirst();
     }
 
     @Override
-    public List<Task> findAll() {
+    public List<TaskEntity> findAll() {
         return new ArrayList<>(stubTasks);
     }
 
     @Override
-    public Task save(Task task) {
+    public TaskEntity save(TaskEntity task) {
         return task;
     }
 

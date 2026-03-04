@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mipt.tchtech.config.RequestScopedBean;
-import com.mipt.tchtech.model.Task;
+import com.mipt.tchtech.dto.TaskDto;
 import com.mipt.tchtech.service.TaskService;
 
 /**
  * REST контроллер для управления задачами.
- * Предоставляет API для выполнения CRUD операций над объектами Task.
+ * Предоставляет API для выполнения CRUD операций над объектами TaskDto.
  *
  * @author mts.tchtech
  * @version 1.0
@@ -41,26 +41,26 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<Task> getAllTasks() {
+    public List<TaskDto> getAllTasks() {
         RequestScopedBean requestBean = applicationContext.getBean(RequestScopedBean.class);
         log.info("TaskController.getAllTasks вызван, ID запроса: {}", requestBean.getRequestId());
         return taskService.getAllTasks();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable String id) {
+    public ResponseEntity<TaskDto> getTaskById(@PathVariable String id) {
         return taskService.getTaskById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
+    public TaskDto createTask(@RequestBody TaskDto task) {
         return taskService.createTask(task);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable String id, @RequestBody Task task) {
+    public ResponseEntity<TaskDto> updateTask(@PathVariable String id, @RequestBody TaskDto task) {
         return taskService.updateTask(id, task)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

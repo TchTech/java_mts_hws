@@ -1,6 +1,7 @@
 package com.mipt.tchtech;
 
-import com.mipt.tchtech.model.Task;
+import com.mipt.tchtech.dto.TaskDto;
+import com.mipt.tchtech.model.TaskEntity;
 import com.mipt.tchtech.repository.TaskRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,14 +41,14 @@ class TaskControllerTest {
 
     @Test
     void testGetAllTasks_Positive() {
-        taskRepository.save(new Task("t-1", "Задача 1", "Опис 1", false));
-        taskRepository.save(new Task("t-2", "Задача 2", "Опис 2", true));
+        taskRepository.save(new TaskEntity("t-1", "Задача 1", "Опис 1", false));
+        taskRepository.save(new TaskEntity("t-2", "Задача 2", "Опис 2", true));
 
-        ResponseEntity<List<Task>> response = restTemplate.exchange(
+        ResponseEntity<List<TaskDto>> response = restTemplate.exchange(
                 baseUrl,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<Task>>() {}
+                new ParameterizedTypeReference<List<TaskDto>>() {}
         );
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -57,11 +58,11 @@ class TaskControllerTest {
 
     @Test
     void testGetAllTasks_Negative_Empty() {
-        ResponseEntity<List<Task>> response = restTemplate.exchange(
+        ResponseEntity<List<TaskDto>> response = restTemplate.exchange(
                 baseUrl,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<Task>>() {}
+                new ParameterizedTypeReference<List<TaskDto>>() {}
         );
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -70,9 +71,9 @@ class TaskControllerTest {
 
     @Test
     void testGetTaskById_Positive() {
-        taskRepository.save(new Task("t-1", "Задача 1", "Опис 1", false));
+        taskRepository.save(new TaskEntity("t-1", "Задача 1", "Опис 1", false));
 
-        ResponseEntity<Task> response = restTemplate.getForEntity(baseUrl + "/t-1", Task.class);
+        ResponseEntity<TaskDto> response = restTemplate.getForEntity(baseUrl + "/t-1", TaskDto.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -81,15 +82,15 @@ class TaskControllerTest {
 
     @Test
     void testGetTaskById_Negative() {
-        ResponseEntity<Task> response = restTemplate.getForEntity(baseUrl + "/non-existent", Task.class);
+        ResponseEntity<TaskDto> response = restTemplate.getForEntity(baseUrl + "/non-existent", TaskDto.class);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
     void testCreateTask_Positive() {
-        Task newTask = new Task(null, "Новая", "Новое Описание", false);
-        ResponseEntity<Task> response = restTemplate.postForEntity(baseUrl, newTask, Task.class);
+        TaskDto newTask = new TaskDto(null, "Новая", "Новое Описание", false);
+        ResponseEntity<TaskDto> response = restTemplate.postForEntity(baseUrl, newTask, TaskDto.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -107,12 +108,12 @@ class TaskControllerTest {
 
     @Test
     void testUpdateTask_Positive() {
-        taskRepository.save(new Task("t-1", "Задача 1", "Опис 1", false));
+        taskRepository.save(new TaskEntity("t-1", "Задача 1", "Опис 1", false));
 
-        Task updateInfo = new Task(null, "Задача 1 Обновлена", "Опис 1", true);
-        HttpEntity<Task> request = new HttpEntity<>(updateInfo);
+        TaskDto updateInfo = new TaskDto(null, "Задача 1 Обновлена", "Опис 1", true);
+        HttpEntity<TaskDto> request = new HttpEntity<>(updateInfo);
 
-        ResponseEntity<Task> response = restTemplate.exchange(baseUrl + "/t-1", HttpMethod.PUT, request, Task.class);
+        ResponseEntity<TaskDto> response = restTemplate.exchange(baseUrl + "/t-1", HttpMethod.PUT, request, TaskDto.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Задача 1 Обновлена", response.getBody().getTitle());
@@ -121,17 +122,17 @@ class TaskControllerTest {
 
     @Test
     void testUpdateTask_Negative() {
-        Task updateInfo = new Task(null, "Задача 1 Обновлена", "Опис 1", true);
-        HttpEntity<Task> request = new HttpEntity<>(updateInfo);
+        TaskDto updateInfo = new TaskDto(null, "Задача 1 Обновлена", "Опис 1", true);
+        HttpEntity<TaskDto> request = new HttpEntity<>(updateInfo);
 
-        ResponseEntity<Task> response = restTemplate.exchange(baseUrl + "/non-existent", HttpMethod.PUT, request, Task.class);
+        ResponseEntity<TaskDto> response = restTemplate.exchange(baseUrl + "/non-existent", HttpMethod.PUT, request, TaskDto.class);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
     void testDeleteTask_Positive() {
-        taskRepository.save(new Task("t-1", "Задача 1", "Опис 1", false));
+        taskRepository.save(new TaskEntity("t-1", "Задача 1", "Опис 1", false));
 
         ResponseEntity<Void> response = restTemplate.exchange(baseUrl + "/t-1", HttpMethod.DELETE, null, Void.class);
 

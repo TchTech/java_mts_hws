@@ -2,17 +2,17 @@ package com.mipt.tchtech.model;
 
 import java.util.Objects;
 
-public class Task {
+public class TaskEntity {
 
     private String id;
     private String title;
     private String description;
     private boolean completed;
 
-    public Task() {
+    public TaskEntity() {
     }
 
-    public Task(String id, String title, String description, boolean completed) {
+    public TaskEntity(String id, String title, String description, boolean completed) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -59,11 +59,11 @@ public class Task {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Task task = (Task) o;
-        return completed == task.completed
-                && Objects.equals(id, task.id)
-                && Objects.equals(title, task.title)
-                && Objects.equals(description, task.description);
+        TaskEntity that = (TaskEntity) o;
+        return completed == that.completed
+                && Objects.equals(id, that.id)
+                && Objects.equals(title, that.title)
+                && Objects.equals(description, that.description);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{"
+        return "TaskEntity{"
                 + "id='" + id + '\''
                 + ", title='" + title + '\''
                 + ", description='" + description + '\''

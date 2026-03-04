@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import com.mipt.tchtech.model.Task;
+import com.mipt.tchtech.model.TaskEntity;
 
 /**
  * Реализация репозитория задач в памяти.
@@ -23,20 +23,20 @@ import com.mipt.tchtech.model.Task;
 @Primary
 public class InMemoryTaskRepository implements TaskRepository {
 
-    private final Map<String, Task> tasks = new ConcurrentHashMap<>();
+    private final Map<String, TaskEntity> tasks = new ConcurrentHashMap<>();
 
     @Override
-    public Optional<Task> findById(String id) {
+    public Optional<TaskEntity> findById(String id) {
         return Optional.ofNullable(tasks.get(id));
     }
 
     @Override
-    public List<Task> findAll() {
+    public List<TaskEntity> findAll() {
         return new ArrayList<>(tasks.values());
     }
 
     @Override
-    public Task save(Task task) {
+    public TaskEntity save(TaskEntity task) {
         tasks.put(task.getId(), task);
         return task;
     }
@@ -46,7 +46,7 @@ public class InMemoryTaskRepository implements TaskRepository {
         tasks.remove(id);
     }
 
-    public Map<String, Task> getTasksMap() {
+    public Map<String, TaskEntity> getTasksMap() {
         return tasks;
     }
 }
