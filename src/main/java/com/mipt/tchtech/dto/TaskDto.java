@@ -1,0 +1,83 @@
+package com.mipt.tchtech.dto;
+
+import java.util.Objects;
+
+public class TaskDto {
+
+    private String id;
+    private String title;
+    private String description;
+    private boolean completed;
+
+    public TaskDto() {
+    }
+
+    public TaskDto(String id, String title, String description, boolean completed) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.completed = completed;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        TaskDto that = (TaskDto) o;
+        return completed == that.completed
+                && Objects.equals(id, that.id)
+                && Objects.equals(title, that.title)
+                && Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description, completed);
+    }
+
+    @Override
+    public String toString() {
+        return "TaskDto{"
+                + "id='" + id + '\''
+                + ", title='" + title + '\''
+                + ", description='" + description + '\''
+                + ", completed=" + completed
+                + '}';
+    }
+}
