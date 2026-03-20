@@ -7,13 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-/**
- * Бин с областью видимости prototype.
- * Создает новый экземпляр при каждом запросе из контекста и генерирует уникальный идентификатор.
- *
- * @author mts.tchtech
- * @version 1.0
- */
 @Component
 @Scope("prototype")
 public class PrototypeScopedBean {

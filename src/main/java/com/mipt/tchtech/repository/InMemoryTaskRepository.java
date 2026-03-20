@@ -11,14 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.mipt.tchtech.model.TaskEntity;
 
-/**
- * Реализация репозитория задач в памяти.
- * Использует ConcurrentHashMap для потокобезопасного хранения задач.
- * Является основной реализацией репозитория по умолчанию.
- *
- * @author mts.tchtech
- * @version 1.0
- */
 @Repository
 @Primary
 public class InMemoryTaskRepository implements TaskRepository {

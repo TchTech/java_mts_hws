@@ -10,13 +10,6 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
-/**
- * Бин с областью видимости request.
- * Создается для каждого HTTP-запроса, хранит уникальный идентификатор и время старта запроса.
- *
- * @author mts.tchtech
- * @version 1.0
- */
 @Component
 @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class RequestScopedBean {

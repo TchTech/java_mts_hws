@@ -6,14 +6,6 @@ import java.util.Optional;
 
 import com.mipt.tchtech.model.TaskEntity;
 
-/**
- * Репозиторий-заглушка для задач.
- * Предоставляет статический набор данных для тестирования и отладки,
- * не сохраняет новые задачи и не удаляет существующие.
- *
- * @author mts.tchtech
- * @version 1.0
- */
 public class StubTaskRepository implements TaskRepository {
 
     private final List<TaskEntity> stubTasks;

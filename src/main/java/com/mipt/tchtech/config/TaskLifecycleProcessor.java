@@ -6,13 +6,6 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
-/**
- * Процессор жизненного цикла бинов.
- * Логирует этапы до и после инициализации для бинов, связанных с задачами (сервисы и репозитории).
- *
- * @author mts.tchtech
- * @version 1.0
- */
 @Component
 public class TaskLifecycleProcessor implements BeanPostProcessor {
 

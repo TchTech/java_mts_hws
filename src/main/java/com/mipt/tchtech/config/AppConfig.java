@@ -6,13 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import com.mipt.tchtech.repository.StubTaskRepository;
 import com.mipt.tchtech.repository.TaskRepository;
 
-/**
- * Конфигурационный класс приложения.
- * Определяет дополнительные Spring бины, такие как репозиторий-заглушка.
- *
- * @author mts.tchtech
- * @version 1.0
- */
 @Configuration
 public class AppConfig {
 

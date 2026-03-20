@@ -1,6 +1,10 @@
 package com.mipt.tchtech.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class TaskEntity {
 
@@ -8,6 +12,10 @@ public class TaskEntity {
     private String title;
     private String description;
     private boolean completed;
+    private LocalDateTime createdAt;
+    private LocalDate dueDate;
+    private Priority priority;
+    private Set<String> tags = new HashSet<>();
 
     public TaskEntity() {
     }
@@ -17,6 +25,8 @@ public class TaskEntity {
         this.title = title;
         this.description = description;
         this.completed = completed;
+        this.createdAt = LocalDateTime.now();
+        this.priority = Priority.MEDIUM;
     }
 
     public String getId() {
@@ -49,6 +59,38 @@ public class TaskEntity {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public Set<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<String> tags) {
+        this.tags = tags != null ? tags : new HashSet<>();
     }
 
     @Override

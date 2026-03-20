@@ -5,13 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.mipt.tchtech.repository.TaskRepository;
 
-/**
- * Сервис для получения статистики по задачам.
- * Позволяет сравнивать данные между основным репозиторием и репозиторием-заглушкой.
- *
- * @author mts.tchtech
- * @version 1.0
- */
 @Service
 public class TaskStatisticsService {
 

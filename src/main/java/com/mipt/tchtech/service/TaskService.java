@@ -1,5 +1,6 @@
 package com.mipt.tchtech.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,21 +12,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.mipt.tchtech.config.PrototypeScopedBean;
-import com.mipt.tchtech.dto.TaskDto;
-import com.mipt.tchtech.dto.TaskMapper;
+import com.mipt.tchtech.dto.TaskCreateDto;
+import com.mipt.tchtech.dto.TaskResponseDto;
+import com.mipt.tchtech.dto.TaskUpdateDto;
+import com.mipt.tchtech.mapper.TaskMapper;
 import com.mipt.tchtech.model.TaskEntity;
 import com.mipt.tchtech.repository.TaskRepository;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 
-/**
- * Сервис для управления бизнес-логикой задач.
- * Инкапсулирует работу с репозиторием и предоставляет методы для создания, чтения, обновления и удаления задач.
- *
- * @author mts.tchtech
- * @version 1.0
- */
 @Service
 public class TaskService {
 
@@ -57,31 +53,28 @@ public class TaskService {
         log.info("TaskService @PreDestroy: Очистка ресурсов. Задач в кэше перед уничтожением: {}", count);
     }
 
-    public List<TaskDto> getAllTasks() {
+    public List<TaskResponseDto> getAllTasks() {
         return taskRepository.findAll().stream()
-                .map(taskMapper::toDto)
+                .map(taskMapper::toResponseDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<TaskDto> getTaskById(String id) {
-        return taskRepository.findById(id).map(taskMapper::toDto);
+    public Optional<TaskResponseDto> getTaskById(String id) {
+        return taskRepository.findById(id).map(taskMapper::toResponseDto);
     }
 
-    public TaskDto createTask(TaskDto task) {
-        if (task.getId() == null || task.getId().isEmpty()) {
-            PrototypeScopedBean idGenerator = applicationContext.getBean(PrototypeScopedBean.class);
-            task.setId(idGenerator.getGeneratedId());
-        }
-        TaskEntity entity = taskMapper.toEntity(task);
-        return taskMapper.toDto(taskRepository.save(entity));
+    public TaskResponseDto createTask(TaskCreateDto dto) {
+        TaskEntity entity = taskMapper.toEntity(dto);
+        PrototypeScopedBean idGenerator = applicationContext.getBean(PrototypeScopedBean.class);
+        entity.setId(idGenerator.getGeneratedId());
+        entity.setCreatedAt(LocalDateTime.now());
+        return taskMapper.toResponseDto(taskRepository.save(entity));
     }
 
-    public Optional<TaskDto> updateTask(String id, TaskDto updatedTask) {
+    public Optional<TaskResponseDto> updateTask(String id, TaskUpdateDto dto) {
         return taskRepository.findById(id).map(existingTask -> {
-            existingTask.setTitle(updatedTask.getTitle());
-            existingTask.setDescription(updatedTask.getDescription());
-            existingTask.setCompleted(updatedTask.isCompleted());
-            return taskMapper.toDto(taskRepository.save(existingTask));
+            taskMapper.updateEntity(dto, existingTask);
+            return taskMapper.toResponseDto(taskRepository.save(existingTask));
         });
     }
 
