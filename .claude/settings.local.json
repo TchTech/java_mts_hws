@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd:*)",
+      "Bash(BASE=\"src/main/java/com/mipt/tchtech\")",
+      "Bash(mkdir -p \"$BASE/model\" \"$BASE/dto\" \"$BASE/mapper\" \"$BASE/validation\" \"$BASE/repository\" \"$BASE/service\" \"$BASE/controller\" \"$BASE/config\" \"$BASE/aspect\" \"$BASE/exception\" \"src/main/resources\" \"src/test/java/com/mipt/tchtech\")",
+      "Bash(ls:*)"
+    ]
+  }
+}
