@@ -1,18 +1,18 @@
-name: 2 semester test for hw-spring3
+name: 2 semester test for hw-spring4
 
 on:
   push:
     branches:
       - '**'
     paths:
-      - 'hw-3-spring/**'
-      - '.github/workflows/spring3.yaml'
+      - 'hw-4-spring/**'
+      - '.github/workflows/spring4.yaml'
   pull_request:
     branches:
       - '**'
     paths:
-      - 'hw-3-spring/**'
-      - '.github/workflows/spring3.yaml'
+      - 'hw-4-spring/**'
+      - '.github/workflows/spring4.yaml'
 
 jobs:
   test:
@@ -20,7 +20,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: hw-3-spring
+        working-directory: hw-4-spring
 
     steps:
       - name: Checkout repository
