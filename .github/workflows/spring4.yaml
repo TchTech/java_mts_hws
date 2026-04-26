@@ -1,0 +1,37 @@
+name: 2 semester test for hw-spring4
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'hw-4-spring/**'
+      - '.github/workflows/spring4.yaml'
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - 'hw-4-spring/**'
+      - '.github/workflows/spring4.yaml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: hw-4-spring
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Run tests with Maven
+        run: mvn --batch-mode clean test
