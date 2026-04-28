@@ -1,0 +1,39 @@
+image: maven:3.9-eclipse-temurin-17
+
+stages:
+  - build
+  - test
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
+  MAVEN_CLI_OPTS: "--batch-mode --no-transfer-progress --errors --fail-at-end"
+  PROJECT_DIR: "hw-3-spring"
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .m2/repository
+
+build:
+  stage: build
+  script:
+    - cd "$PROJECT_DIR"
+    - mvn $MAVEN_CLI_OPTS clean compile
+  artifacts:
+    paths:
+      - $PROJECT_DIR/target/
+    expire_in: 1 hour
+
+test:
+  stage: test
+  script:
+    - cd "$PROJECT_DIR"
+    - mvn $MAVEN_CLI_OPTS test
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - $PROJECT_DIR/target/surefire-reports/TEST-*.xml
+    paths:
+      - $PROJECT_DIR/target/surefire-reports/
+    expire_in: 1 week
