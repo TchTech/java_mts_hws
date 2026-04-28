@@ -1,7 +1,0 @@
-logging:
-  level:
-    com.mipt.tchtech: INFO
-    org.springframework: WARN
-
-app:
-  mode: Рабочий Режим
