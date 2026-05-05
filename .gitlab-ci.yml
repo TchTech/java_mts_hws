@@ -1,0 +1,47 @@
+image: maven:3.9-eclipse-temurin-17
+
+stages:
+  - build
+  - test
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
+  MAVEN_CLI_OPTS: "--batch-mode --no-transfer-progress --errors --fail-at-end"
+  DOCKER_HOST: "tcp://docker:2375"
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_DRIVER: "overlay2"
+  TESTCONTAINERS_RYUK_DISABLED: "true"
+  TESTCONTAINERS_HOST_OVERRIDE: "docker"
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .m2/repository
+
+build:hw-5-spring:
+  stage: build
+  script:
+    - cd hw-5-spring
+    - mvn $MAVEN_CLI_OPTS clean compile
+  artifacts:
+    paths:
+      - hw-5-spring/target/
+    expire_in: 1 hour
+
+test:hw-5-spring:
+  stage: test
+  services:
+    - name: docker:24-dind
+      alias: docker
+      command: ["--tls=false"]
+  script:
+    - cd hw-5-spring
+    - mvn $MAVEN_CLI_OPTS test
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - hw-5-spring/target/surefire-reports/TEST-*.xml
+    paths:
+      - hw-5-spring/target/surefire-reports/
+    expire_in: 1 week

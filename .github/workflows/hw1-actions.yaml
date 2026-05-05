@@ -1,18 +1,33 @@
-name: Homework job
+name: 2 semester tests
 
 on:
   push:
     branches:
-    - '**'
+      - '**'
   pull_request:
     branches:
-    - '**'
+      - '**'
 
 jobs:
-  build:
+  test-hw5:
+    name: hw-5-spring (with Testcontainers)
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hw-5-spring
+
     steps:
-      - name: Print message to console
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Run tests with Maven
         run: |
-          echo "Current date and time:"
-          date
+          chmod +x mvnw
+          ./mvnw -B clean test

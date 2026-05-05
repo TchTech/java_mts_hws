@@ -3,8 +3,13 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Uploads / local files ###
+uploads/
+local.properties
+
 ### IntelliJ IDEA ###
 .idea
+.idea/
 *.iws
 *.iml
 *.ipr
