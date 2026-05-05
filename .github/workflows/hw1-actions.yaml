@@ -3,17 +3,18 @@ name: 2 semester tests
 on:
   push:
     branches:
-    - '**'
+      - '**'
   pull_request:
     branches:
-    - '**'
+      - '**'
 
 jobs:
-  test:
+  test-hw5:
+    name: hw-5-spring (with Testcontainers)
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: hw-3-spring
+        working-directory: hw-5-spring
 
     steps:
       - name: Checkout repository
@@ -29,4 +30,4 @@ jobs:
       - name: Run tests with Maven
         run: |
           chmod +x mvnw
-          ./mvnw clean test
+          ./mvnw -B clean test

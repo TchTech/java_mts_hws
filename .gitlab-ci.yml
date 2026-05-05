@@ -7,33 +7,41 @@ stages:
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
   MAVEN_CLI_OPTS: "--batch-mode --no-transfer-progress --errors --fail-at-end"
-  PROJECT_DIR: "hw-3-spring"
+  DOCKER_HOST: "tcp://docker:2375"
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_DRIVER: "overlay2"
+  TESTCONTAINERS_RYUK_DISABLED: "true"
+  TESTCONTAINERS_HOST_OVERRIDE: "docker"
 
 cache:
   key: "$CI_COMMIT_REF_SLUG"
   paths:
     - .m2/repository
 
-build:
+build:hw-5-spring:
   stage: build
   script:
-    - cd "$PROJECT_DIR"
+    - cd hw-5-spring
     - mvn $MAVEN_CLI_OPTS clean compile
   artifacts:
     paths:
-      - $PROJECT_DIR/target/
+      - hw-5-spring/target/
     expire_in: 1 hour
 
-test:
+test:hw-5-spring:
   stage: test
+  services:
+    - name: docker:24-dind
+      alias: docker
+      command: ["--tls=false"]
   script:
-    - cd "$PROJECT_DIR"
+    - cd hw-5-spring
     - mvn $MAVEN_CLI_OPTS test
   artifacts:
     when: always
     reports:
       junit:
-        - $PROJECT_DIR/target/surefire-reports/TEST-*.xml
+        - hw-5-spring/target/surefire-reports/TEST-*.xml
     paths:
-      - $PROJECT_DIR/target/surefire-reports/
+      - hw-5-spring/target/surefire-reports/
     expire_in: 1 week
